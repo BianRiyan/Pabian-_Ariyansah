@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kalkulator Sistem Bilangan</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #fff; max-width: 420px; margin: 30px auto; padding: 0 20px; color: #222; }
+  label { display: block; margin: 18px 0 8px; font-size: 16px; }
+  input, select { width: 100%; padding: 14px; font-size: 18px; border: 1px solid #eee; border-radius: 8px; box-sizing: border-box; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  button { width: 100%; margin-top: 20px; padding: 14px; font-size: 20px; background: #1a6ff0; color: #fff; border: 0; border-radius: 8px; cursor: pointer; }
+  button:hover { background: #135ad0; }
+  #error { color: red; margin-top: 10px; }
+  #boxHasil { margin-top: 24px; padding: 28px 16px; background: #d4e9dc; border-radius: 8px; text-align: center; }
+  #boxHasil p { margin: 0 0 12px; font-size: 18px; color: #444; }
+  #hasil { font-size: 40px; font-weight: bold; word-break: break-all; }
+</style>
+</head>
+<body>
+  <label for="angka">Masukkan Bilangan</label>
+  <input type="text" id="angka" placeholder="contoh: 16">
+
+  <label for="dari">Sistem Bilangan Input</label>
+  <select id="dari">
+    <option value="2">Biner (Basis 2)</option>
+    <option value="10" selected>Desimal (Basis 10)</option>
+    <option value="8">Oktal (Basis 8)</option>
+    <option value="16">Hexadesimal (Basis 16)</option>
+  </select>
+
+  <button onclick="konversi()">Konversi</button>
+  <div id="error"></div>
+
+  <label for="ke">Konversi ke Sistem Bilangan</label>
+  <select id="ke">
+    <option value="2">Biner (Basis 2)</option>
+    <option value="10">Desimal (Basis 10)</option>
+    <option value="8" selected>Oktal (Basis 8)</option>
+    <option value="16">Hexadesimal (Basis 16)</option>
+  </select>
+
+  <div id="boxHasil">
+    <p>Hasil Konversi</p>
+    <div id="hasil">-</div>
+  </div>
+
+<script>
+function konversi() {
+  const input = document.getElementById("angka").value.trim().toLowerCase();
+  const dari = parseInt(document.getElementById("dari").value);
+  const ke = parseInt(document.getElementById("ke").value);
+  const error = document.getElementById("error");
+  const hasil = document.getElementById("hasil");
+  error.textContent = "";
+
+  const digitValid = "0123456789abcdef".slice(0, dari);
+  if (input === "" || ![...input].every(c => digitValid.includes(c))) {
+    error.textContent = "Input tidak valid untuk basis " + dari + ".";
+    hasil.textContent = "-";
+    return;
+  }
+
+  hasil.textContent = parseInt(input, dari).toString(ke).toUpperCase();
+}
+</script>
+</body>
+  </html>
